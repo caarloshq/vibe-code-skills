@@ -44,7 +44,7 @@ If a spec exists (e.g., `docs/specs/spec-auth.md`), the plan should implement ex
 
 Before writing the plan, do a thorough codebase scan. This is the step that prevents code duplication and ensures consistency:
 
-1. **Read foundational docs**: `CLAUDE.md`, `docs/architecture.md`: understand the project's patterns and conventions
+1. **Read foundational docs**: `CLAUDE.md`, `architecture.md`: understand the project's patterns and conventions
 2. **Read `app/globals.css`**: understand the design tokens (primary source of truth for all visual decisions)
 3. **Search for related code**: Look for existing components, hooks, actions, types, and utilities that relate to the feature. Use grep/glob to find them
 4. **Identify reusable pieces**: Note existing code that can be extended or composed rather than recreated

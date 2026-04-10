@@ -31,7 +31,7 @@ Examples: "a pricing card for the plans page", "a file upload with drag and drop
 ## Before starting
 
 1. **Read `app/globals.css`**: this is the primary source of truth for all design tokens. Every color, radius, spacing decision comes from here.
-2. **Read `docs/design.md`** if it exists. This provides broader context on design philosophy, typography rules, and do's/don'ts.
+2. **Read `design.md`** if it exists. This provides broader context on design philosophy, typography rules, and do's/don'ts.
 3. **Search the codebase** for existing components that do something similar. Check `components/ui/` (shadcn base) and `components/` (custom). If something close already exists, extend it instead of creating a new one.
 
 ## Workflow
@@ -183,10 +183,10 @@ component code       → consumes tokens via Tailwind classes
   ↓
 styleguide/page.tsx  → visual mirror of globals.css tokens
   ↓
-docs/design.md       → documentation (updated periodically, not on every component)
+design.md       → documentation (updated periodically, not on every component)
 ```
 
-`docs/design.md` does NOT need to be updated for every single component addition. It gets updated when there are significant changes: new token categories, major design pattern shifts, or a batch of components that change the system meaningfully. For day-to-day component additions, `globals.css` + `styleguide/page.tsx` is enough.
+`design.md` does NOT need to be updated for every single component addition. It gets updated when there are significant changes: new token categories, major design pattern shifts, or a batch of components that change the system meaningfully. For day-to-day component additions, `globals.css` + `styleguide/page.tsx` is enough.
 
 ## Directory structure
 
@@ -201,10 +201,8 @@ components/
 app/
 └── styleguide/
     ├── navigation.ts      # Updated with new component
-    ├── page.tsx            # Tokens visual mirror (synced)
-    └── components/
-        └── [component-name]/
-            └── page.tsx   # Component showcase
+    ├── page.tsx           # Tokens visual mirror (synced)
+    └── components/        # Component showcases (one folder per component)
 ```
 
 ## Output

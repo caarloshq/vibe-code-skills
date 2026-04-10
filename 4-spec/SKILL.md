@@ -34,7 +34,7 @@ Ask the user:
 
 1. **What are you speccing?** The full application, or a specific feature/module?
 2. **Brief description**: what does it do, who is it for?
-3. **Do you have existing docs?** Check for `docs/architecture.md`, `docs/design.md`, or prior specs in `docs/specs/`. If they exist, read them; they inform the spec.
+3. **Do you have existing docs?** Check for `architecture.md`, `design.md`, or prior specs in `docs/specs/`. If they exist, read them; they inform the spec.
 
 If the user gives a broad description ("it's a task management app"), ask follow-up questions to uncover the core flows before writing. Don't guess: clarify.
 
@@ -152,7 +152,7 @@ If a behavior involves a server call, it can fail. Always describe what the user
 Order pages and behaviors by how a new user would encounter them. Start with onboarding, then core functionality, then settings/admin.
 
 ### Don't design the UI in the spec
-The spec describes what exists and what it does, not how it looks. Visual decisions belong in `app/globals.css` and `docs/design.md`. The spec says "a form with email and password fields": not "a centered card with rounded corners and a blue submit button."
+The spec describes what exists and what it does, not how it looks. Visual decisions belong in `app/globals.css` and `design.md`. The spec says "a form with email and password fields": not "a centered card with rounded corners and a blue submit button."
 
 ---
 

@@ -1,11 +1,11 @@
 ---
 name: 2-design-base
-description: Extract design tokens from a visual reference and set up the complete design system foundation. Includes globals.css, shadcn/ui with MCP, styleguide page, and docs/design.md. Use this skill whenever the user mentions "design system", "design base", "design tokens", "setup design", "extract tokens", "styleguide", "design foundation", wants to initialize a project's visual identity from a screenshot/Figma/brand guide, or is starting a new project and needs the visual foundation before building components. This is the visual counterpart to --1-new-project: it sets up architecture, design-base sets up the visual layer. Do NOT use this skill for creating custom components or personalizing existing ones: this skill delivers the token foundation + shadcn defaults only.
+description: Extract design tokens from a visual reference and set up the complete design system foundation. Includes globals.css, shadcn/ui with MCP, styleguide page, and design.md. Use this skill whenever the user mentions "design system", "design base", "design tokens", "setup design", "extract tokens", "styleguide", "design foundation", wants to initialize a project's visual identity from a screenshot/Figma/brand guide, or is starting a new project and needs the visual foundation before building components. This is the visual counterpart to --1-new-project: it sets up architecture, design-base sets up the visual layer. Do NOT use this skill for creating custom components or personalizing existing ones: this skill delivers the token foundation + shadcn defaults only.
 ---
 
 # Design Base
 
-This skill analyzes a visual reference (screenshot, Figma, brand guide, or any design inspiration) and sets up the complete design system foundation for a project. It extracts tokens, initializes shadcn/ui with MCP, creates a live styleguide, and generates `docs/design.md` as documentation.
+This skill analyzes a visual reference (screenshot, Figma, brand guide, or any design inspiration) and sets up the complete design system foundation for a project. It extracts tokens, initializes shadcn/ui with MCP, creates a live styleguide, and generates `design.md` as documentation.
 
 The skill delivers the base layer only: tokens and shadcn template components. Custom component creation and personalization belong to `--5-new-component`.
 
@@ -22,7 +22,7 @@ The skill delivers the base layer only: tokens and shadcn template components. C
   7-doc-sync        Keep documentation in sync
 ```
 
-**Prerequisite:** `--1-new-project` should have run first so `docs/architecture.md` and `CLAUDE.md` exist.
+**Prerequisite:** `--1-new-project` should have run first so `architecture.md` and `CLAUDE.md` exist.
 
 ## Source of truth
 
@@ -33,10 +33,10 @@ globals.css          → PRIMARY (all token values defined here)
   ↓
 styleguide/page.tsx  → visual mirror (1:1 of globals.css)
   ↓
-docs/design.md       → documentation (generated once, updated only in batch)
+design.md       → documentation (generated once, updated only in batch)
 ```
 
-`docs/design.md` is generated once during this skill's execution and only updated when significant design changes accumulate (new token categories, major palette shifts, etc.). Day-to-day work reads from `globals.css` directly: not from `design.md`.
+`design.md` is generated once during this skill's execution and only updated when significant design changes accumulate (new token categories, major palette shifts, etc.). Day-to-day work reads from `globals.css` directly: not from `design.md`.
 
 ## What to ask the user
 
@@ -348,9 +348,9 @@ export default function StyleguideLayout({
 
 This page is a 1:1 mirror of the tokens in `globals.css`. No component demos: just the raw foundation rendered visually.
 
-### 7. Generate/update `docs/design.md`
+### 7. Generate/update `design.md`
 
-Create `docs/design.md` documenting the full design system. Follow this structure:
+Create `design.md` documenting the full design system. Follow this structure:
 
 1. **Visual Theme and Atmosphere**: overall design direction, key characteristics
 2. **Color Palette and Roles**: every token with hex value, organized by context (light, dark, semantic, overlays)
@@ -362,7 +362,7 @@ Create `docs/design.md` documenting the full design system. Follow this structur
 8. **Do's and Don'ts**: clear rules for using the system correctly
 9. **Agent Prompt Guide**: quick color reference table + example component prompts using the tokens, so any AI agent can instantly apply the design system
 
-If `docs/design.md` already exists, update it with new tokens while preserving any custom sections the user added. Add a sync timestamp at the top:
+If `design.md` already exists, update it with new tokens while preserving any custom sections the user added. Add a sync timestamp at the top:
 
 ```markdown
 > Last synced: [date] via 2-design-base
@@ -379,7 +379,7 @@ If `docs/design.md` already exists, update it with new tokens while preserving a
 2. Update the component consuming the token (Tailwind class or CSS class)
 3. Update `app/styleguide/page.tsx` so the visual representation reflects the change
 
-`docs/design.md` does NOT need to be updated on every token change. It's documentation that gets refreshed periodically: when there are significant design shifts or a batch of accumulated changes. Don't slow down the workflow by updating design.md every time a color changes.
+`design.md` does NOT need to be updated on every token change. It's documentation that gets refreshed periodically: when there are significant design shifts or a batch of accumulated changes. Don't slow down the workflow by updating design.md every time a color changes.
 
 ---
 
@@ -393,8 +393,7 @@ app/
     ├── layout.tsx           # Shared layout with sidebar
     ├── navigation.ts        # Navigation config
     └── page.tsx             # All design tokens rendered visually
-docs/
-└── design.md               # Full design system documentation
+design.md                    # Full design system documentation (project root)
 ```
 
 ---

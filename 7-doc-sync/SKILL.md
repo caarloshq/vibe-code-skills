@@ -29,13 +29,13 @@ Projects evolve fast, especially with AI-assisted development. After a few imple
 ## Scope: what this skill touches
 
 **Reads and updates (with user confirmation):**
-- `docs/architecture.md`
+- `architecture.md`
 - `CLAUDE.md` (project root)
 - `README.md` (project root)
 
 **Reads but does NOT modify:**
 - `app/globals.css`: reads to understand current tokens, but never modifies
-- `docs/design.md`: reads for context, but design.md updates happen via `--2-design-base`
+- `design.md`: reads for context, but design.md updates happen via `--2-design-base`
 - Source code files: reads to understand the project state, never modifies
 
 ## How it works
@@ -54,7 +54,7 @@ Read the current state of the codebase to understand reality:
 
 Read each documentation file that exists:
 
-- `docs/architecture.md`
+- `architecture.md`
 - `CLAUDE.md` (project root)
 - `README.md` (project root)
 

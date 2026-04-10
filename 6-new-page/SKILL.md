@@ -32,7 +32,7 @@ The user describes the page (dashboard, settings, landing, profile, etc.) and sh
 
 1. **Read `app/globals.css`: primary source of truth for all design tokens**
 2. **Read `CLAUDE.md`: project rules, architecture patterns, naming conventions**
-3. **Read `docs/architecture.md`** if it exists: folder structure, separation of concerns
+3. **Read `architecture.md`** if it exists: folder structure, separation of concerns
 4. **Check `docs/specs/`: if a spec exists for this page/feature, follow it**. The spec from `--4-spec` defines what the page does; the visual reference defines how it looks
 5. **List existing components: scan `components/ui/` and `components/`** to know what's already available. Reuse first, install second, create last
 
@@ -152,7 +152,7 @@ page code            → assembles components, references tokens
 docs/specs/          → defines what the page does (if spec exists)
 ```
 
-`docs/design.md` is reference documentation: the page reads tokens directly from `globals.css`, not from `design.md`. The design.md is for humans and AI agents to understand the system; `globals.css` is what the code actually consumes.
+`design.md` is reference documentation: the page reads tokens directly from `globals.css`, not from `design.md`. The design.md is for humans and AI agents to understand the system; `globals.css` is what the code actually consumes.
 
 ## Directory structure
 

@@ -40,18 +40,18 @@ If the user is vague on stack, suggest a sensible default based on what they're 
 
 ### Step 2: Check for existing files
 
-Before writing, check if `docs/architecture.md`, `docs/design.md`, or `CLAUDE.md` already exist in the project root.
+Before writing, check if `architecture.md`, `design.md`, or `CLAUDE.md` already exist in the project root.
 
 - **If none exist**: create all three from scratch.
 - **If some exist**: read the existing ones, show the user what you found, and ask: "These files already exist: do you want me to overwrite them or merge new content into the existing ones?" Never silently overwrite.
 
 ### Step 3: Generate the three documents
 
-Create all outputs inside a `docs/` folder (except CLAUDE.md which goes at the project root).
+Create all three documents at the project root.
 
 ---
 
-## Output 1: `docs/architecture.md`
+## Output 1: `architecture.md`
 
 This document defines the technical skeleton of the project. It should cover:
 
@@ -121,7 +121,7 @@ Adapt sections to match the actual stack. If using a backend framework like Expr
 
 ---
 
-## Output 2: `docs/design.md`
+## Output 2: `design.md`
 
 This document defines the visual language of the project. It prevents the AI from making inconsistent design choices across pages.
 
@@ -254,11 +254,11 @@ npm run test       # Run tests
 - Actions: verbNoun (createUser, fetchPosts)
 
 ## Design System
-Read `app/globals.css` for design tokens (primary source of truth). Read docs/architecture.md for architectural decisions (primary source of truth for technical decisions). Read `docs/design.md` for broader design context and guidelines.
+Read `app/globals.css` for design tokens (primary source of truth). Read `architecture.md` for architectural decisions (primary source of truth for technical decisions). Read `design.md` for broader design context and guidelines.
 
 ## Before Implementing Any Task
 1. Read this file
-2. Read `docs/architecture.md` for the full architecture context
+2. Read `architecture.md` for the full architecture context
 3. Read `app/globals.css` for design tokens
 4. Search the codebase for existing code you can reuse
 5. Plan which files to create/modify before writing code
