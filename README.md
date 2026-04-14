@@ -1,6 +1,6 @@
 # Vibe Code Workflow Skills
 
-**7 skills que transformam vibe coding em desenvolvimento profissional.**
+**10 skills que transformam vibe coding em desenvolvimento profissional.**
 
 > Por [Carlos Henrique](https://carloshq.design). Product Designer.
 
@@ -16,7 +16,7 @@ Product designer. Background em brand, UX e design systems. Construo aplicaçõe
 
 Milhares de tokens gastos, muitos erros, e um workflow que finalmente funciona. Essas skills nasceram desse processo.
 
-IA com processo gera código profissional. IA sem processo gera protótipo descartável. Essas 7 skills criam um pipeline estruturado onde cada etapa tem input claro, output definido, e chama a próxima automaticamente.
+IA com processo gera código profissional. IA sem processo gera protótipo descartável. Essas 10 skills criam um pipeline estruturado onde cada etapa tem input claro, output definido, e chama a próxima automaticamente.
 
 ---
 
@@ -53,24 +53,39 @@ IA com processo gera código profissional. IA sem processo gera protótipo desca
          ┌─────────────────┐
          │  7-doc-sync      │  Sincroniza docs
          │  após cada batch │  com o código atual
+         └────────┬────────┘
+                  ▼
+         ┌─────────────────┐
+         │  8-plan-design   │  Escopo visual
+         │                  │  fluxo de telas, estados
+         └────────┬────────┘
+                  ▼
+         ┌─────────────────┐
+         │  9-figma         │  Execução no Figma
+         │                  │  frames via MCP
+         └────────┬────────┘
+                  ▼
+         ┌─────────────────┐
+         │  10-review       │  QA de design
+         │                  │  Nielsen, WCAG, UX writing
          └─────────────────┘
 ```
 
 ---
 
-## As 7 skills
+## As 10 skills
 
 ### 1-new-project
 Fundação técnica. Gera `architecture.md`, `design.md` e `CLAUDE.md`. Define stack, folder structure, naming conventions, separação de responsabilidades, regras de segurança.
 
 ### 2-design-base
-Fundação visual. Recebe referência (screenshot, Figma, brand guide), extrai tokens, inicializa shadcn/ui + MCP, cria `globals.css`, styleguide, e `docs/design.md`.
+Fundação visual. Recebe referência (screenshot, Figma, brand guide), extrai tokens, inicializa shadcn/ui + MCP, cria `globals.css`, styleguide e `docs/design.md`.
 
 ### 3-plan
-Pesquisa o codebase, identifica código reutilizável, gera PRD com a lista EXATA de arquivos a criar/modificar. Tasks pequenas que cabem no contexto da IA. Ao final, pergunta se quer limpar o contexto antes de continuar.
+Pesquisa o codebase, identifica código reutilizável, gera PRD com a lista exata de arquivos a criar/modificar. Tasks pequenas que cabem no contexto da IA.
 
 ### 4-spec
-Especificação do produto em 4 camadas: Overview → Pages → Components → Behaviors. Cada comportamento tem happy path, error cases e edge cases. Ao final, pergunta se quer começar a implementar.
+Especificação do produto em 4 camadas: Overview → Pages → Components → Behaviors. Cada comportamento tem happy path, error cases e edge cases.
 
 ### 5-new-component
 Busca no codebase antes de criar. Consulta shadcn MCP antes de construir do zero. Estende ao invés de recriar.
@@ -80,6 +95,15 @@ Monta páginas reutilizando componentes existentes. Protótipo visual com mock d
 
 ### 7-doc-sync
 Lê o código, compara com os docs, mostra relatório e só aplica após confirmação. Nunca toca em CSS ou código.
+
+### 8-plan-design
+Gera o mapa visual antes de abrir o Figma: fluxo de telas, estados alternativos e corner cases. Se um link do ClickUp for fornecido, lê a task automaticamente. Rode antes do `9-figma`.
+
+### 9-figma
+Executa o plano no Figma via MCP. Lê os estilos da página atual, cria os frames na ordem certa e aplica UX writing consistente. Rode após o `8-plan-design`.
+
+### 10-review
+QA completo como Design Director. Avalia cobertura do plano, heurísticas de Nielsen com score, WCAG, UX writing e entrega 2 direções de redesign. Funciona também como critique standalone.
 
 ---
 
@@ -102,60 +126,53 @@ docs/design.md       → documentação (batch updates)
 
 ## Instalação
 
+### Como plugin (recomendado)
+
+Baixe o ZIP do repositório, extraia e instale diretamente no Claude Code como plugin apontando para a pasta extraída.
+
+### Via script
+
 ```bash
-cp -r skills/ your-project/.claude/skills/
+# global — disponível em todas as conversas
+./install.sh
+
+# só no projeto atual
+./install.sh --project
 ```
 
----
+### Manual
 
-## Configuração rápida
-
-Cole no `CLAUDE.md` do seu projeto:
-
-```markdown
-## Workflow Skills
-
-Este projeto usa um workflow de 7 skills para desenvolvimento estruturado.
-As skills estão em `.claude/skills/` e devem ser consultadas na ordem:
-
-1. `--1-new-project` · Fundação técnica (rode uma vez no início)
-2. `--2-design-base` · Fundação visual (rode uma vez após o projeto ser criado)
-3. `--3-plan` · Planejamento de implementação (rode antes de codar cada feature)
-4. `--4-spec` · Especificação do produto (rode para cada feature ou app completo)
-5. `--5-new-component` · Adicionar componentes (rode conforme necessário)
-6. `--6-new-page` · Montar páginas (rode conforme necessário)
-7. `--7-doc-sync` · Sincronizar docs (rode após batches de implementação)
-
-### Regras:
-- `app/globals.css` é a verdade primária para design tokens
-- `architecture.md` é a verdade primária para decisões técnicas
-- Sempre busque componentes existentes antes de criar novos
-- Páginas são protótipos visuais primeiro, funcionalidade vem depois
-- Nunca hardcode hex, rgb ou pixel values
-- Pesquise o codebase antes de implementar qualquer task
+```bash
+cp -r skills/ ~/.claude/skills/
 ```
-
----
-
-## Como modificar
-
-Cada skill é um `SKILL.md` dentro da sua pasta. Edite livremente. Troque a stack, adicione etapas (`8-test`, `8-deploy`), ajuste o fluxo. Os padrões funcionam com qualquer stack.
 
 ---
 
 ## Estrutura
 
 ```
-.claude/skills/
-├── START-HERE.md
-├── 1-new-project/SKILL.md
-├── 2-design-base/SKILL.md
-├── 3-plan/SKILL.md
-├── 4-spec/SKILL.md
-├── 5-new-component/SKILL.md
-├── 6-new-page/SKILL.md
-└── 7-doc-sync/SKILL.md
+vibe-code-skills/
+├── .claude-plugin/
+│   └── plugin.json
+├── skills/
+│   ├── 1-new-project/SKILL.md
+│   ├── 2-design-base/SKILL.md
+│   ├── 3-plan/SKILL.md
+│   ├── 4-spec/SKILL.md
+│   ├── 5-new-component/SKILL.md
+│   ├── 6-new-page/SKILL.md
+│   ├── 7-doc-sync/SKILL.md
+│   ├── 8-plan-design/SKILL.md
+│   ├── 9-figma/SKILL.md
+│   └── 10-review/SKILL.md
+└── install.sh
 ```
+
+---
+
+## Como modificar
+
+Cada skill é um `SKILL.md` dentro da sua pasta. Edite livremente. Troque a stack, adicione etapas, ajuste o fluxo. Os padrões funcionam com qualquer stack.
 
 ---
 
@@ -171,7 +188,7 @@ Product designer. Background in brand, UX, and design systems. I build entire ap
 
 Thousands of tokens spent, plenty of mistakes, and a workflow that finally works. These skills were born from that process.
 
-AI with process produces professional code. AI without process produces disposable prototypes. These 7 skills create a structured pipeline where each step has a clear input, a defined output, and chains into the next automatically.
+AI with process produces professional code. AI without process produces disposable prototypes. These 10 skills create a structured pipeline where each step has a clear input, a defined output, and chains into the next automatically.
 
 ---
 
@@ -208,12 +225,27 @@ AI with process produces professional code. AI without process produces disposab
          ┌─────────────────┐
          │  7-doc-sync      │  Sync docs
          │  after each batch│  with current code
+         └────────┬────────┘
+                  ▼
+         ┌─────────────────┐
+         │  8-plan-design   │  Visual scope
+         │                  │  screen flow, states
+         └────────┬────────┘
+                  ▼
+         ┌─────────────────┐
+         │  9-figma         │  Execute in Figma
+         │                  │  frames via MCP
+         └────────┬────────┘
+                  ▼
+         ┌─────────────────┐
+         │  10-review       │  Design QA
+         │                  │  Nielsen, WCAG, UX writing
          └─────────────────┘
 ```
 
 ---
 
-## The 7 skills
+## The 10 skills
 
 ### 1-new-project
 Technical foundation. Generates `architecture.md`, `design.md`, and `CLAUDE.md`. Defines stack, folder structure, naming conventions, separation of concerns, security rules.
@@ -222,10 +254,10 @@ Technical foundation. Generates `architecture.md`, `design.md`, and `CLAUDE.md`.
 Visual foundation. Takes a reference (screenshot, Figma, brand guide), extracts tokens, initializes shadcn/ui + MCP, creates `globals.css`, styleguide, and `docs/design.md`.
 
 ### 3-plan
-Researches the codebase, identifies reusable code, generates a PRD with the EXACT list of files to create/modify. Small tasks that fit within the AI's context window. At the end, asks if you want to clear context before continuing.
+Researches the codebase, identifies reusable code, generates a PRD with the exact list of files to create/modify. Small tasks that fit within the AI's context window.
 
 ### 4-spec
-Product specification in 4 layers: Overview → Pages → Components → Behaviors. Each behavior has happy path, error cases, and edge cases. At the end, asks if you want to start implementing.
+Product specification in 4 layers: Overview → Pages → Components → Behaviors. Each behavior has happy path, error cases, and edge cases.
 
 ### 5-new-component
 Searches the codebase before creating. Checks shadcn MCP before building from scratch. Extends instead of recreating.
@@ -235,6 +267,15 @@ Assembles pages by reusing existing components. Visual prototype with mock data.
 
 ### 7-doc-sync
 Reads the code, compares against docs, shows a report, and only applies after user confirmation. Never touches CSS or code.
+
+### 8-plan-design
+Generates a visual map before opening Figma: screen flow, alternative states, and corner cases. If a ClickUp link is provided, reads the task automatically. Run before `9-figma`.
+
+### 9-figma
+Executes the plan in Figma via MCP. Reads the current page's styles, creates frames in the correct order, and applies consistent UX writing. Run after `8-plan-design`.
+
+### 10-review
+Full QA as Design Director. Evaluates plan coverage, Nielsen heuristics with scores, WCAG, UX writing, and delivers 2 redesign directions. Also works as a standalone design critique.
 
 ---
 
@@ -257,60 +298,53 @@ docs/design.md       → documentation (batch updates)
 
 ## Installation
 
+### As a plugin (recommended)
+
+Download the ZIP from the repository, extract it, and install directly in Claude Code as a plugin pointing to the extracted folder.
+
+### Via script
+
 ```bash
-cp -r skills/ your-project/.claude/skills/
+# global — available in all conversations
+./install.sh
+
+# current project only
+./install.sh --project
 ```
 
----
+### Manual
 
-## Quick setup
-
-Paste in your project's `CLAUDE.md`:
-
-```markdown
-## Workflow Skills
-
-This project uses a 7-skill workflow for structured development.
-Skills are in `.claude/skills/` and should be consulted in order:
-
-1. `--1-new-project` · Technical foundation (run once at the start)
-2. `--2-design-base` · Visual foundation (run once after project creation)
-3. `--3-plan` · Implementation planning (run before coding each feature)
-4. `--4-spec` · Product specification (run for each feature or full app)
-5. `--5-new-component` · Add components (run as needed)
-6. `--6-new-page` · Build pages (run as needed)
-7. `--7-doc-sync` · Sync docs (run after implementation batches)
-
-### Rules:
-- `app/globals.css` is the primary source of truth for design tokens
-- `architecture.md` is the primary source of truth for technical decisions
-- Always search for existing components before creating new ones
-- Pages are visual prototypes first, functionality comes later
-- Never hardcode hex, rgb, or pixel values
-- Research the codebase before implementing any task
+```bash
+cp -r skills/ ~/.claude/skills/
 ```
-
----
-
-## How to modify
-
-Each skill is a `SKILL.md` inside its folder. Edit freely. Swap the stack, add steps (`8-test`, `8-deploy`), adjust the flow. The patterns work with any stack.
 
 ---
 
 ## File structure
 
 ```
-.claude/skills/
-├── START-HERE.md
-├── 1-new-project/SKILL.md
-├── 2-design-base/SKILL.md
-├── 3-plan/SKILL.md
-├── 4-spec/SKILL.md
-├── 5-new-component/SKILL.md
-├── 6-new-page/SKILL.md
-└── 7-doc-sync/SKILL.md
+vibe-code-skills/
+├── .claude-plugin/
+│   └── plugin.json
+├── skills/
+│   ├── 1-new-project/SKILL.md
+│   ├── 2-design-base/SKILL.md
+│   ├── 3-plan/SKILL.md
+│   ├── 4-spec/SKILL.md
+│   ├── 5-new-component/SKILL.md
+│   ├── 6-new-page/SKILL.md
+│   ├── 7-doc-sync/SKILL.md
+│   ├── 8-plan-design/SKILL.md
+│   ├── 9-figma/SKILL.md
+│   └── 10-review/SKILL.md
+└── install.sh
 ```
+
+---
+
+## How to modify
+
+Each skill is a `SKILL.md` inside its folder. Edit freely. Swap the stack, add steps, adjust the flow. The patterns work with any stack.
 
 ---
 
