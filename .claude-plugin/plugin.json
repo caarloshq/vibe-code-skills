@@ -1,0 +1,11 @@
+{
+  "name": "vibe-code-skills",
+  "version": "1.1.0",
+  "description": "Workflow skills for structured vibe coding — project setup, design system, planning, Figma, and more.",
+  "author": {
+    "name": "caarloshq",
+    "url": "https://github.com/caarloshq/vibe-code-skills"
+  },
+  "repository": "https://github.com/caarloshq/vibe-code-skills",
+  "license": "MIT"
+}

@@ -25,7 +25,7 @@ mkdir -p "$INSTALL_DIR"
 installed=0
 skipped=0
 
-for skill_dir in "$REPO_DIR"/*/; do
+for skill_dir in "$REPO_DIR"/skills/*/; do
   if [ -f "$skill_dir/SKILL.md" ]; then
     skill_name=$(basename "$skill_dir")
     target="$INSTALL_DIR/$skill_name"
