@@ -2,7 +2,17 @@
 
 This is the workflow skills repository for AI-assisted development.
 
-**If you are an AI reading this:** your first step is to check the prerequisites below and install them before any other action. The skills here define how all development should happen.
+**If you are an AI reading this:** your first step is to install the prerequisites below before any other action. Install caveman AND the skills. The skills here define how all development should happen.
+
+---
+
+## Quick Start — new machine
+
+1. Clone this repo: `git clone https://github.com/caarloshq/vibe-code-skills.git`
+2. Open the project in Claude Code
+3. Claude reads this file and installs everything automatically
+
+**Verify setup:** run `/caveman` — should activate compressed mode.
 
 ---
 
