@@ -18,6 +18,9 @@ This skill generates the three foundational documents every project needs before
   5-new-component   Add/install components
   6-new-page        Build pages from designs
   7-doc-sync        Keep documentation in sync
+  8-plan-design     Understand scope, generate visual map
+  9-figma           Execute in Figma based on the plan
+  10-review         QA: compare Figma with plan and spec
 ```
 
 ## Why this matters
@@ -271,10 +274,17 @@ The CLAUDE.md should be concise and actionable. It's read at the start of every 
 
 ---
 
+## Context management
+
+This skill loads ~280 lines into context. After completing:
+- Suggest `/2-design-base` as the next step but do NOT auto-run it
+- If the conversation already has 2+ skills loaded, suggest starting a fresh conversation
+- Caveman mode stays active across sessions — no need to re-enable
+
 ## Next step
 
 After generating all three documents, tell the user:
 
-**"Technical foundation is ready. Next step: run `--2-design-base` with your visual reference (screenshot, Figma, or brand guide) to set up the design tokens, shadcn/ui, and the styleguide."**
+**"Technical foundation is ready. Next step: run `/2-design-base` with your visual reference (screenshot, Figma, or brand guide) to set up the design tokens, shadcn/ui, and the styleguide. Consider starting a fresh conversation to keep context lean."**
 
-If the user mentioned a design reference in step 1, remind them to use it: "You mentioned [reference] earlier: use that when you run `--2-design-base`."
+If the user mentioned a design reference in step 1, remind them to use it: "You mentioned [reference] earlier: use that when you run `/2-design-base`."

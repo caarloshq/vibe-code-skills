@@ -79,13 +79,13 @@ IA com processo gera código profissional. IA sem processo gera protótipo desca
 Fundação técnica. Gera `architecture.md`, `design.md` e `CLAUDE.md`. Define stack, folder structure, naming conventions, separação de responsabilidades, regras de segurança.
 
 ### 2-design-base
-Fundação visual. Recebe referência (screenshot, Figma, brand guide), extrai tokens, inicializa shadcn/ui + MCP, cria `globals.css`, styleguide e `docs/design.md`.
+Fundação visual. Recebe referência (screenshot, Figma, brand guide), extrai tokens, inicializa shadcn/ui + MCP, cria `globals.css`, styleguide e `design.md`.
 
 ### 3-plan
-Pesquisa o codebase, identifica código reutilizável, gera PRD com a lista exata de arquivos a criar/modificar. Tasks pequenas que cabem no contexto da IA.
+Pesquisa o codebase, identifica código reutilizável, gera PRD com a lista exata de arquivos a criar/modificar. Tasks pequenas que cabem no contexto da IA. Intercambiável em ordem com `/4-spec`.
 
 ### 4-spec
-Especificação do produto em 4 camadas: Overview → Pages → Components → Behaviors. Cada comportamento tem happy path, error cases e edge cases.
+Especificação do produto em 4 camadas: Overview → Pages → Components → Behaviors. Cada comportamento tem happy path, error cases e edge cases. Intercambiável em ordem com `/3-plan`.
 
 ### 5-new-component
 Busca no codebase antes de criar. Consulta shadcn MCP antes de construir do zero. Estende ao invés de recriar.
@@ -97,10 +97,10 @@ Monta páginas reutilizando componentes existentes. Protótipo visual com mock d
 Lê o código, compara com os docs, mostra relatório e só aplica após confirmação. Nunca toca em CSS ou código.
 
 ### 8-plan-design
-Gera o mapa visual antes de abrir o Figma: fluxo de telas, estados alternativos e corner cases. Se um link do ClickUp for fornecido, lê a task automaticamente. Rode antes do `9-figma`.
+Gera o mapa visual antes de abrir o Figma: fluxo de telas, estados alternativos e corner cases. Se um link do ClickUp for fornecido, lê a task automaticamente. Rode antes do `/9-figma`.
 
 ### 9-figma
-Executa o plano no Figma via MCP. Lê os estilos da página atual, cria os frames na ordem certa e aplica UX writing consistente. Rode após o `8-plan-design`.
+Executa o plano no Figma via MCP. Lê os estilos da página atual, cria os frames na ordem certa e aplica UX writing consistente. Rode após o `/8-plan-design`.
 
 ### 10-review
 QA completo como Design Director. Avalia cobertura do plano, heurísticas de Nielsen com score, WCAG, UX writing e entrega 2 direções de redesign. Funciona também como critique standalone.
@@ -119,31 +119,39 @@ styleguide/page.tsx  → espelho visual (1:1)
   ↓
 component code       → consome tokens via Tailwind
   ↓
-docs/design.md       → documentação (batch updates)
+design.md       → documentação (batch updates)
 ```
 
 ---
 
 ## Instalação
 
-### Como plugin (recomendado)
+### Opção mais fácil — direto no Claude Code
 
-Baixe o ZIP do repositório, extraia e instale diretamente no Claude Code como plugin apontando para a pasta extraída.
+1. Abra o Claude Code
+2. Cole essa mensagem no chat:
 
-### Via script
-
-```bash
-# global — disponível em todas as conversas
-./install.sh
-
-# só no projeto atual
-./install.sh --project
+```
+Execute esse comando para instalar as vibe-code-skills:
+curl -fsSL https://raw.githubusercontent.com/caarloshq/vibe-code-skills/main/install.sh | bash
 ```
 
-### Manual
+3. Reinicie o Claude Code
+
+Pronto. Skills disponíveis em todas as conversas.
+
+---
+
+### Opção para desenvolvedores — terminal
 
 ```bash
-cp -r skills/ ~/.claude/skills/
+curl -fsSL https://raw.githubusercontent.com/caarloshq/vibe-code-skills/main/install.sh | bash
+```
+
+Ou clonando o repositório:
+
+```bash
+git clone https://github.com/caarloshq/vibe-code-skills.git && cd vibe-code-skills && ./install.sh
 ```
 
 ---
@@ -251,13 +259,13 @@ AI with process produces professional code. AI without process produces disposab
 Technical foundation. Generates `architecture.md`, `design.md`, and `CLAUDE.md`. Defines stack, folder structure, naming conventions, separation of concerns, security rules.
 
 ### 2-design-base
-Visual foundation. Takes a reference (screenshot, Figma, brand guide), extracts tokens, initializes shadcn/ui + MCP, creates `globals.css`, styleguide, and `docs/design.md`.
+Visual foundation. Takes a reference (screenshot, Figma, brand guide), extracts tokens, initializes shadcn/ui + MCP, creates `globals.css`, styleguide, and `design.md`.
 
 ### 3-plan
-Researches the codebase, identifies reusable code, generates a PRD with the exact list of files to create/modify. Small tasks that fit within the AI's context window.
+Researches the codebase, identifies reusable code, generates a PRD with the exact list of files to create/modify. Small tasks that fit within the AI's context window. Interchangeable in order with `/4-spec`.
 
 ### 4-spec
-Product specification in 4 layers: Overview → Pages → Components → Behaviors. Each behavior has happy path, error cases, and edge cases.
+Product specification in 4 layers: Overview → Pages → Components → Behaviors. Each behavior has happy path, error cases, and edge cases. Interchangeable in order with `/3-plan`.
 
 ### 5-new-component
 Searches the codebase before creating. Checks shadcn MCP before building from scratch. Extends instead of recreating.
@@ -269,10 +277,10 @@ Assembles pages by reusing existing components. Visual prototype with mock data.
 Reads the code, compares against docs, shows a report, and only applies after user confirmation. Never touches CSS or code.
 
 ### 8-plan-design
-Generates a visual map before opening Figma: screen flow, alternative states, and corner cases. If a ClickUp link is provided, reads the task automatically. Run before `9-figma`.
+Generates a visual map before opening Figma: screen flow, alternative states, and corner cases. If a ClickUp link is provided, reads the task automatically. Run before `/9-figma`.
 
 ### 9-figma
-Executes the plan in Figma via MCP. Reads the current page's styles, creates frames in the correct order, and applies consistent UX writing. Run after `8-plan-design`.
+Executes the plan in Figma via MCP. Reads the current page's styles, creates frames in the correct order, and applies consistent UX writing. Run after `/8-plan-design`.
 
 ### 10-review
 Full QA as Design Director. Evaluates plan coverage, Nielsen heuristics with scores, WCAG, UX writing, and delivers 2 redesign directions. Also works as a standalone design critique.
@@ -291,31 +299,39 @@ styleguide/page.tsx  → visual mirror (1:1)
   ↓
 component code       → consumes tokens via Tailwind
   ↓
-docs/design.md       → documentation (batch updates)
+design.md       → documentation (batch updates)
 ```
 
 ---
 
 ## Installation
 
-### As a plugin (recommended)
+### Easiest — directly in Claude Code
 
-Download the ZIP from the repository, extract it, and install directly in Claude Code as a plugin pointing to the extracted folder.
+1. Open Claude Code
+2. Paste this message in the chat:
 
-### Via script
-
-```bash
-# global — available in all conversations
-./install.sh
-
-# current project only
-./install.sh --project
+```
+Run this command to install vibe-code-skills:
+curl -fsSL https://raw.githubusercontent.com/caarloshq/vibe-code-skills/main/install.sh | bash
 ```
 
-### Manual
+3. Restart Claude Code
+
+Done. Skills available in all conversations.
+
+---
+
+### For developers — terminal
 
 ```bash
-cp -r skills/ ~/.claude/skills/
+curl -fsSL https://raw.githubusercontent.com/caarloshq/vibe-code-skills/main/install.sh | bash
+```
+
+Or cloning the repository:
+
+```bash
+git clone https://github.com/caarloshq/vibe-code-skills.git && cd vibe-code-skills && ./install.sh
 ```
 
 ---

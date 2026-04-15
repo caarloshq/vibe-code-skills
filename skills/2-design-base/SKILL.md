@@ -1,13 +1,13 @@
 ---
 name: 2-design-base
-description: Extract design tokens from a visual reference and set up the complete design system foundation. Includes globals.css, shadcn/ui with MCP, styleguide page, and design.md. Use this skill whenever the user mentions "design system", "design base", "design tokens", "setup design", "extract tokens", "styleguide", "design foundation", wants to initialize a project's visual identity from a screenshot/Figma/brand guide, or is starting a new project and needs the visual foundation before building components. This is the visual counterpart to --1-new-project: it sets up architecture, design-base sets up the visual layer. Do NOT use this skill for creating custom components or personalizing existing ones: this skill delivers the token foundation + shadcn defaults only.
+description: Extract design tokens from a visual reference and set up the complete design system foundation. Includes globals.css, shadcn/ui with MCP, styleguide page, and design.md. Use this skill whenever the user mentions "design system", "design base", "design tokens", "setup design", "extract tokens", "styleguide", "design foundation", wants to initialize a project's visual identity from a screenshot/Figma/brand guide, or is starting a new project and needs the visual foundation before building components. This is the visual counterpart to /1-new-project: it sets up architecture, design-base sets up the visual layer. Do NOT use this skill for creating custom components or personalizing existing ones: this skill delivers the token foundation + shadcn defaults only.
 ---
 
 # Design Base
 
 This skill analyzes a visual reference (screenshot, Figma, brand guide, or any design inspiration) and sets up the complete design system foundation for a project. It extracts tokens, initializes shadcn/ui with MCP, creates a live styleguide, and generates `design.md` as documentation.
 
-The skill delivers the base layer only: tokens and shadcn template components. Custom component creation and personalization belong to `--5-new-component`.
+The skill delivers the base layer only: tokens and shadcn template components. Custom component creation and personalization belong to `/5-new-component`.
 
 ## Skill workflow position
 
@@ -20,9 +20,12 @@ The skill delivers the base layer only: tokens and shadcn template components. C
   5-new-component   Add/install components
   6-new-page        Build pages from designs
   7-doc-sync        Keep documentation in sync
+  8-plan-design     Understand scope, generate visual map
+  9-figma           Execute in Figma based on the plan
+  10-review         QA: compare Figma with plan and spec
 ```
 
-**Prerequisite:** `--1-new-project` should have run first so `architecture.md` and `CLAUDE.md` exist.
+**Prerequisite:** `/1-new-project` should have run first so `architecture.md` and `CLAUDE.md` exist.
 
 ## Source of truth
 
@@ -268,7 +271,7 @@ export const navigation: NavSection[] = [
   {
     title: "Components",
     items: [
-      // Components will be added here by --5-new-component
+      // Components will be added here by /5-new-component
     ]
   }
 ]
@@ -411,13 +414,20 @@ After setup, provide the user with a quick summary:
 
 ---
 
+## Context management
+
+This skill loads ~430 lines into context. After completing:
+- Suggest `/3-plan` as the next step but do NOT auto-run it
+- If the conversation already has 2+ skills loaded, suggest starting a fresh conversation
+- Caveman mode stays active across sessions — no need to re-enable
+
 ## Next step
 
 After completing the design base, tell the user:
 
-**"Design system is ready: tokens in `globals.css`, styleguide at `/styleguide`, docs in `design.md`. Next step: run `--3-plan` to plan the implementation before building it."**
+**"Design system is ready: tokens in `globals.css`, styleguide at `/styleguide`, docs in `design.md`. Next step: run `/3-plan` to plan the implementation. Consider starting a fresh conversation to keep context lean."**
 
-If the project is simple or the user already knows what to build, they can skip to `--5-new-component` or `--6-new-page` directly.
+If the project is simple or the user already knows what to build, they can skip to `/5-new-component` or `/6-new-page` directly.
 
 ---
 

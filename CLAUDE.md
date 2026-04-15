@@ -37,6 +37,7 @@ After installing, confirm with `/caveman` to activate compressed mode.
 **Core principle:**
 - `globals.css` → primary source of truth for design (tokens)
 - `architecture.md` → primary source of truth for technical decisions
+- `design.md` → design system documentation (project root, not `docs/`)
 - If a token doesn't exist in `globals.css`, it doesn't exist in the project
 - If a decision isn't in `architecture.md`, it hasn't been made
 
@@ -47,11 +48,18 @@ After installing, confirm with `/caveman` to activate compressed mode.
 With caveman installed, install the skills if they're not already in the environment:
 
 ```bash
-# Global installation (available in all conversations)
-./install.sh
+# Global — available in all conversations (no clone needed)
+curl -fsSL https://raw.githubusercontent.com/caarloshq/vibe-code-skills/main/install.sh | bash
 
 # Current project only
-./install.sh --project
+curl -fsSL https://raw.githubusercontent.com/caarloshq/vibe-code-skills/main/install.sh | bash -s -- --project
+```
+
+If you already cloned the repo:
+
+```bash
+./install.sh           # global
+./install.sh --project # project only
 ```
 
 After installation, skills are available via `/skill-name` in Claude Code.
@@ -88,7 +96,7 @@ After installation, skills are available via `/skill-name` in Claude Code.
 
 ### `2-design-base`
 **Triggers:** "design base", "visual setup", "globals", "tokens", "shadcn", when there's a screenshot/Figma/brand guide to extract tokens from.
-**Output:** `globals.css`, `docs/design.md`, configured styleguide.
+**Output:** `globals.css`, `design.md`, configured styleguide.
 **Rule:** run after `1-new-project`, before any visual code.
 
 ### `3-plan`

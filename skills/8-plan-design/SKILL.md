@@ -1,17 +1,17 @@
 ---
 name: 8-plan-design
 description: >
-  Gera um plano visual de design antes de ir pro Figma. Use sempre que o usuário mencionar
-  "planejar", "plan", "o que preciso criar", "fluxo de telas", "quais telas fazer" ou
-  quiser entender o escopo antes de executar no Figma. Se um link do ClickUp for fornecido,
-  lê a task automaticamente. Rode antes do 9-figma.
-argument-hint: "[link-clickup?] [descrição do que precisa ser feito]"
+  Generate a visual design plan before going to Figma. Use whenever the user mentions
+  "plan design", "before figma", "screen flow", "which screens", "what do I need to create"
+  or wants to understand scope before executing in Figma. If a ClickUp link is provided,
+  reads the task automatically. Run before /9-figma.
+argument-hint: "[clickup-link?] [description of what needs to be done]"
 ---
 
 # Plan Design
 
-Gera um mapa visual do que será construído no Figma: fluxo de telas, estados e corner cases.
-Serve de referência para o `9-figma` e o `10-review`.
+Generates a visual map of what will be built in Figma: screen flow, states, and corner cases.
+Serves as reference for `/9-figma` and `/10-review`.
 
 ## Skill workflow position
 
@@ -31,81 +31,88 @@ Serve de referência para o `9-figma` e o `10-review`.
 
 ---
 
-## Step 1 — Coletar contexto
+## Step 1 — Gather context
 
-### Se um link do ClickUp foi fornecido
-Buscar a task via MCP do ClickUp e extrair:
-- Título e descrição
-- Subtasks (se existirem)
-- Comentários relevantes — focar em decisões e requisitos, ignorar threads de conversa
+### If a ClickUp link was provided
+Fetch the task via ClickUp MCP and extract:
+- Title and description
+- Subtasks (if any)
+- Relevant comments — focus on decisions and requirements, ignore conversation threads
 
-### Se não foi fornecido link
-Trabalhar apenas com o que o usuário descreveu. Não buscar nada no ClickUp.
+### If no link was provided
+Work only with what the user described. Don't search ClickUp.
 
-### Perguntas de clarificação (máximo 2, só se necessário)
-Perguntar apenas se algum desses pontos não estiver claro após ler o contexto:
-- **Quem usa essa tela?** (investidor, operador, admin)
-- **O que o usuário precisa conseguir fazer?** (ação principal)
+### Clarification questions (max 2, only if needed)
+Ask only if these points aren't clear after reading the context:
+- **Who uses this screen?** (investor, operator, admin)
+- **What does the user need to accomplish?** (main action)
 
-Se o contexto já deixar claro, pular direto pro Step 2.
-
----
-
-## Step 2 — Gerar o mapa visual
-
-Gerar um diagrama de fluxo de telas diretamente no chat usando a ferramenta de visualização.
-
-O diagrama deve mostrar:
-- **Telas principais** — cada tela como um nó
-- **Fluxo de navegação** — setas indicando a sequência
-- **Estados alternativos** — loading, empty, error quando relevantes
-- **Corner cases** — situações excepcionais (ex: sem permissão, dados vazios, ação já executada)
-
-Manter o diagrama simples. Se o fluxo tiver mais de 7 telas, dividir em dois diagramas.
+If the context already answers these, skip straight to Step 2.
 
 ---
 
-## Step 3 — Resumo do plano
+## Step 2 — Generate the visual map
 
-Após o diagrama, gerar um resumo curto:
+Generate a screen flow diagram directly in the chat.
+
+The diagram should show:
+- **Main screens** — each screen as a node
+- **Navigation flow** — arrows indicating the sequence
+- **Alternative states** — loading, empty, error when relevant
+- **Corner cases** — exceptional situations (e.g., no permission, empty data, action already taken)
+
+Keep the diagram simple. If the flow has more than 7 screens, split into two diagrams.
+
+---
+
+## Step 3 — Plan summary
+
+After the diagram, generate a short summary:
 
 ```
-## Plano — [nome da feature]
+## Plan — [feature name]
 
-Fonte: [ClickUp: título da task | Descrição fornecida]
+Source: [ClickUp: task title | User description]
 
-Telas a criar
-- [Nome da tela] — [propósito em uma linha]
+Screens to create
+- [Screen name] — [purpose in one line]
 
-Estados a cobrir
-- [tela]: [estados relevantes — default, loading, empty, error]
+States to cover
+- [screen]: [relevant states — default, loading, empty, error]
 
 Corner cases
-- [Situação]: [como tratar]
+- [Situation]: [how to handle]
 
-Fora do escopo
-- [O que não será feito nesse ciclo]
+Out of scope
+- [What won't be done in this cycle]
 
-Ordem de execução
-- [Tela base primeiro, corner cases por último]
+Execution order
+- [Base screen first, corner cases last]
 ```
 
 ---
 
-## UX Writing — práticas a aplicar no plano
+## UX Writing — practices to apply in the plan
 
-Ao nomear telas, estados e corner cases, seguir:
+When naming screens, states, and corner cases, follow:
 
-- **Use verbos orientados à ação do usuário** — "Confirmar recompra", não "Modal de confirmação"
-- **Nomeie estados pelo que o usuário vê**, não pelo estado técnico — "Nenhuma nota encontrada" em vez de "Empty state"
-- **Corner cases têm nome de situação real** — "Investidor sem saldo suficiente", não "Erro de validação"
-- **Seja específico** — "Investidor visualiza posição consolidada" é melhor que "Tela de dashboard"
-- **Evite jargão técnico nos nomes** — eles viram a base dos labels que aparecem na tela
+- **Use action-oriented verbs** — "Confirm buyback", not "Confirmation modal"
+- **Name states by what the user sees**, not the technical state — "No notes found" instead of "Empty state"
+- **Corner cases have real-situation names** — "Investor without sufficient balance", not "Validation error"
+- **Be specific** — "Investor views consolidated position" is better than "Dashboard screen"
+- **Avoid technical jargon in names** — they become the basis for labels that appear on screen
 
 ---
+
+## Context management
+
+This skill loads ~110 lines into context. After completing:
+- Suggest `/9-figma` as the next step but do NOT auto-run it
+- If the conversation already has 2+ skills loaded, suggest starting a fresh conversation
+- Caveman mode stays active across sessions — no need to re-enable
 
 ## Next step
 
 After generating the plan, suggest:
 
-> "Plan ready. Next step: open the Figma file in Dev Mode and run `9-figma` — I'll read the page styles and create the frames in the order defined in the plan."
+**"Plan ready. Next step: open the Figma file and run `/9-figma` — it reads the page styles and creates frames in the order defined here. Consider starting a fresh conversation to keep context lean."**

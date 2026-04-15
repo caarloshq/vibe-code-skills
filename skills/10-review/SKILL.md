@@ -1,21 +1,21 @@
 ---
 name: 10-review
 description: >
-  QA completo de design: age como um Design Director experiente para avaliar frames do Figma
-  cruzando com o plano do projeto e a task do gerenciador de tarefas. Cobre cobertura do plano,
-  heurísticas de Nielsen com score, avaliação visual, WCAG, UX writing, alinhamento
-  estratégico e 2 direções alternativas de redesign. Use como validação de design
-  ou de forma standalone quando pedir critique, feedback, review ou validação de um frame, componente ou fluxo. Trigger mesmo em pedidos casuais
-  ("o que você acha desse design?", "me dá um feedback", "revisa esse componente").
-  Requer conectores Figma e gerenciador de tarefas (ClickUp, Linear, Asana, etc).
-argument-hint: "[node-ids dos frames] [link-task?] [resumo-plano?]"
+  Full design QA: acts as an experienced Design Director to evaluate Figma frames
+  against the project plan and task manager task. Covers plan coverage, Nielsen heuristics
+  with scores, visual evaluation, WCAG, UX writing, strategic alignment, and 2 alternative
+  redesign directions. Use as design validation or standalone when asked for critique,
+  feedback, review, or validation of a frame, component, or flow. Triggers on casual
+  requests too ("what do you think of this design?", "give me feedback", "review this component").
+  Requires Figma and task manager connectors (ClickUp, Linear, Asana, etc).
+argument-hint: "[frame node-ids] [task-link?] [plan-summary?]"
 ---
 
-# Design Review — QA + Avaliação Estratégica
+# Design Review — QA + Strategic Evaluation
 
-Age como um Design Director experiente.
-Valida o Figma contra o plano original e a spec da task.
-Entrega cobertura do plano, heurísticas com score, avaliação visual, UX writing, WCAG e 2 direções de redesign.
+Acts as an experienced Design Director.
+Validates Figma against the original plan and task spec.
+Delivers plan coverage, heuristics with scores, visual evaluation, UX writing, WCAG, and 2 redesign directions.
 
 ## Skill workflow position
 
@@ -35,225 +35,233 @@ Entrega cobertura do plano, heurísticas com score, avaliação visual, UX writi
 
 ---
 
-## Antes de começar — contexto limpo (recomendado)
+## Before starting — clean context (recommended)
 
-> **Dica:** Para um review mais preciso, considere iniciar uma nova conversa — conversas longas acumulam ruído que pode afetar a análise. Se preferir continuar aqui, tudo bem.
+> **Tip:** For a more accurate review, consider starting a fresh conversation — long conversations accumulate noise that can affect analysis. If you prefer to continue here, that's fine.
 >
-> Quando iniciar, traga:
-> - Os **node IDs** dos frames criados no Figma
-> - O **resumo do plano** do projeto (se houver)
-> - O **link da task** do seu gerenciador (opcional)
+> When starting, bring:
+> - The **node IDs** of the frames created in Figma
+> - The **plan summary** (if available)
+> - The **task link** from your task manager (optional)
 
-Prosseguir direto com o que o usuário forneceu. Não aguardar confirmação.
-
----
-
-## Hierarquia de inputs
-
-Quando o usuário fornecer mais de um tipo de input, aplicar esta ordem de prioridade:
-
-1. **Texto escrito pelo usuário** (peso máximo)
-   Instrução textual explícita sobrepõe tudo. "Foca na hierarquia", "ignora cores" — isso é lei.
-   Nunca contradiga ou ignore uma instrução textual explícita.
-
-2. **Task do gerenciador** (peso médio)
-   Define objetivo de negócio, critérios de aceite e contexto da feature.
-
-3. **Plano do projeto** (peso médio)
-   Define telas planejadas, estados, corner cases e o que estava fora do escopo.
-
-4. **Frame do Figma** (peso médio)
-   É o objeto principal da critique. O que o usuário disser tem mais peso do que o que está no frame.
-
-Se nenhum input for fornecido, perguntar:
-> "Qual frame do Figma e/ou task você quer que eu avalie?"
+Proceed directly with what the user provided. Don't wait for confirmation.
 
 ---
 
-## Step 1 — Coletar referências
+## Input hierarchy
+
+When the user provides more than one type of input, apply this priority order:
+
+1. **User's written text** (highest weight)
+   Explicit textual instruction overrides everything. "Focus on hierarchy", "ignore colors" — that's law.
+   Never contradict or ignore an explicit textual instruction.
+
+2. **Task manager task** (medium weight)
+   Defines business objective, acceptance criteria, and feature context.
+
+3. **Project plan** (medium weight)
+   Defines planned screens, states, corner cases, and what was out of scope.
+
+4. **Figma frame** (medium weight)
+   The main object of the critique. What the user says carries more weight than what's in the frame.
+
+If no input is provided, ask:
+> "Which Figma frame and/or task do you want me to evaluate?"
+
+---
+
+## Step 1 — Collect references
 
 ### Figma
-Ler os frames pelos node IDs via MCP (`get_design_context` + `get_screenshot`). Para cada frame, capturar:
-- Nome e organização na página
-- Componentes utilizados
-- Todos os textos visíveis (títulos, labels, botões, mensagens, placeholders)
-- Estados representados
+Read frames by node IDs via MCP (`get_design_context` + `get_screenshot`). For each frame, capture:
+- Name and organization on the page
+- Components used
+- All visible text (titles, labels, buttons, messages, placeholders)
+- States represented
 
-### Plano original (se fornecido)
-Usar o resumo do plano. Extrair:
-- Telas planejadas e seus propósitos
-- Estados a cobrir
-- Corner cases identificados
-- O que estava fora do escopo
+### Original plan (if provided)
+Use the plan summary. Extract:
+- Planned screens and their purposes
+- States to cover
+- Identified corner cases
+- What was out of scope
 
-### Task do projeto (se link fornecido)
-Ler a task e extrair objetivo da feature, critérios de aceite, comentários e decisões já tomadas.
-Ignorar threads de conversa sem decisão.
-Se não houver task, usar o título do frame como contexto e sinalizar ao final.
-
----
-
-## Step 2 — Verificar cobertura do plano
-
-*(Pular se não houver plano do projeto)*
-
-Comparar o que existe no Figma com o que está no plano:
-
-| Item planejado | No Figma? | Observação |
-|----------------|-----------|------------|
-| [Tela / estado] | ✅ / ⚠️ / ❌ | [nota se necessário] |
-
-- ✅ Coberto
-- ⚠️ Parcial ou diferente do planejado
-- ❌ Ausente
+### Project task (if link provided)
+Read the task and extract the feature objective, acceptance criteria, comments, and decisions already made.
+Ignore conversation threads without decisions.
+If no task is available, use the frame title as context and flag it at the end.
 
 ---
 
-## Step 3 — Heurísticas de Nielsen (score 1–5)
+## Step 2 — Verify plan coverage
 
-Avaliar cada heurística com score e pelo menos um exemplo concreto do design observado.
+*(Skip if no project plan was provided)*
 
-| # | Heurística | Score | Exemplo observado |
-|---|-----------|-------|-------------------|
-| 1 | Visibilidade do status do sistema | | |
-| 2 | Correspondência com o mundo real | | |
-| 3 | Controle e liberdade do usuário | | |
-| 4 | Consistência e padrões | | |
-| 5 | Prevenção de erros | | |
-| 6 | Reconhecimento em vez de lembrança | | |
-| 7 | Flexibilidade e eficiência | | |
-| 8 | Design estético e minimalista | | |
-| 9 | Ajuda para reconhecer e recuperar erros | | |
-| 10 | Ajuda e documentação | | |
+Compare what exists in Figma with what's in the plan:
 
-**Score médio**: X/5
+| Planned item | In Figma? | Notes |
+|-------------|-----------|-------|
+| [Screen / state] | ✅ / ⚠️ / ❌ | [note if needed] |
+
+- ✅ Covered
+- ⚠️ Partial or different from planned
+- ❌ Missing
 
 ---
 
-## Step 4 — Avaliação visual
+## Step 3 — Nielsen heuristics (score 1–5)
 
-**Hierarquia visual**
-O olhar segue o fluxo esperado? Onde há quebra de hierarquia?
+Evaluate each heuristic with a score and at least one concrete example from the observed design.
 
-**Tipografia**
-Escala, peso, contraste, legibilidade. Consistência com design system do projeto.
+| # | Heuristic | Score | Observed example |
+|---|-----------|-------|------------------|
+| 1 | Visibility of system status | | |
+| 2 | Match between system and real world | | |
+| 3 | User control and freedom | | |
+| 4 | Consistency and standards | | |
+| 5 | Error prevention | | |
+| 6 | Recognition rather than recall | | |
+| 7 | Flexibility and efficiency of use | | |
+| 8 | Aesthetic and minimalist design | | |
+| 9 | Help users recognize and recover from errors | | |
+| 10 | Help and documentation | | |
 
-**Cor**
-Uso semântico, consistência com design system do projeto.
-Contraste WCAG: texto passa AA (4.5:1)? Elementos de UI passam AA (3:1)?
+**Average score**: X/5
 
-**Espaçamento e ritmo**
-Densidade, respiração, alinhamento, consistência de grid.
+---
+
+## Step 4 — Visual evaluation
+
+**Visual hierarchy**
+Does the eye follow the expected flow? Where does hierarchy break?
+
+**Typography**
+Scale, weight, contrast, legibility. Consistency with project design system.
+
+**Color**
+Semantic usage, consistency with project design system.
+WCAG contrast: text passes AA (4.5:1)? UI elements pass AA (3:1)?
+
+**Spacing and rhythm**
+Density, breathing room, alignment, grid consistency.
 
 ---
 
 ## Step 5 — UX Writing
 
-Para cada texto encontrado nos frames, verificar:
+For each text found in the frames, verify:
 
-- **Botões**: têm verbo + objeto direto? ("Confirmar ação", não "OK")
-- **Títulos de tela**: descrevem a ação do usuário? ("Confirmar ação", não "Ação")
-- **Estados vazios**: explicam por que está vazio e o que fazer a seguir?
-- **Mensagens de erro**: dizem o que aconteceu e orientam o próximo passo?
-- **Labels de campo**: são substantivos diretos, sem instrução embutida? ("Valor", não "Digite o valor")
-- **Linguagem**: adequada ao perfil do usuário da tela?
-- **Consistência de termos**: o mesmo conceito tem o mesmo nome em todos os frames?
+- **Buttons**: verb + direct object? ("Confirm action", not "OK")
+- **Screen titles**: describe the user's action? ("Confirm action", not "Action")
+- **Empty states**: explain why it's empty and what to do next?
+- **Error messages**: say what happened and guide the next step?
+- **Field labels**: direct nouns, no embedded instructions? ("Amount", not "Enter the amount")
+- **Language**: appropriate for the screen's user profile?
+- **Term consistency**: does the same concept have the same name across all frames?
 
 ---
 
-## Step 6 — Usabilidade e acessibilidade
+## Step 6 — Usability and accessibility
 
-**Carga cognitiva**
-Quantas decisões o usuário precisa tomar? O que pode ser simplificado?
+**Cognitive load**
+How many decisions does the user need to make? What can be simplified?
 
-**Clareza de interação**
-CTAs estão claros? Estados (hover, disabled, error, empty) estão cobertos?
-Feedback de ação está presente?
+**Interaction clarity**
+CTAs are clear? States (hover, disabled, error, empty) are covered?
+Action feedback is present?
 
 **WCAG**
-- Contraste de texto: passa / não passa AA (4.5:1)
-- Touch targets: mínimo 44×44px
-- Itens críticos de acessibilidade identificados
+- Text contrast: passes / doesn't pass AA (4.5:1)
+- Touch targets: minimum 44×44px
+- Critical accessibility items identified
 
 ---
 
-## Step 7 — Alinhamento estratégico
+## Step 7 — Strategic alignment
 
-O design resolve o objetivo da task?
-O que torna essa solução melhor que a óbvia?
-Alguma decisão de design contradiz critérios de aceite?
+Does the design solve the task's objective?
+What makes this solution better than the obvious one?
+Does any design decision contradict acceptance criteria?
 
 ---
 
-## Step 8 — Relatório final
+## Step 8 — Final report
 
 ```
-## Design Review — [nome da feature]
+## Design Review — [feature name]
 
-### Cobertura do plano
-[X de Y itens cobertos — ou "Sem plano de referência"]
-[tabela de cobertura]
+### Plan coverage
+[X of Y items covered — or "No reference plan"]
+[coverage table]
 
-### Heurísticas de Nielsen
-Score médio: X/5
-[tabela com score e exemplo]
+### Nielsen heuristics
+Average score: X/5
+[table with score and example]
 
-### Avaliação visual
-[Hierarquia / Tipografia / Cor+WCAG / Espaçamento]
+### Visual evaluation
+[Hierarchy / Typography / Color+WCAG / Spacing]
 
 ### UX Writing
-[tabela de problemas — ou "Textos dentro do padrão"]
+[issues table — or "Text within standards"]
 
-### Usabilidade e acessibilidade
-[carga cognitiva, clareza de interação, WCAG]
+### Usability and accessibility
+[cognitive load, interaction clarity, WCAG]
 
-### Alinhamento estratégico
-[resumo — ou "Sem task de referência"]
+### Strategic alignment
+[summary — or "No reference task"]
 
-### Priorização de correções
+### Correction priorities
 
-🔴 Critical — Quebra usabilidade ou acessibilidade
+🔴 Critical — Breaks usability or accessibility
 - [item]
 
-🟡 Important — Compromete experiência ou consistência
+🟡 Important — Compromises experience or consistency
 - [item]
 
-🟢 Polish — Refinamento estético ou de detalhe
+🟢 Polish — Aesthetic or detail refinement
 - [item]
 
-### 2 direções alternativas de redesign
+### 2 alternative redesign directions
 
-Direção A: [nome]
-Princípio norteador: [o que guia essa direção]
-O que muda: [descrição clara]
-Por quê funciona melhor: [justificativa]
+Direction A: [name]
+Guiding principle: [what drives this direction]
+What changes: [clear description]
+Why it works better: [justification]
 
-Direção B: [nome]
-Princípio norteador: [o que guia essa direção]
-O que muda: [descrição clara]
-Por quê funciona melhor: [justificativa]
+Direction B: [name]
+Guiding principle: [what drives this direction]
+What changes: [clear description]
+Why it works better: [justification]
 
-### Aprovado para handoff?
-[✅ Sim | ⚠️ Sim, com ressalvas | ❌ Não — ajustes necessários]
+### Approved for handoff?
+[✅ Yes | ⚠️ Yes, with caveats | ❌ No — adjustments needed]
 ```
 
 ---
+
+## Context management
+
+This skill loads ~260 lines into context. After completing:
+- If approved, suggest handoff to development (back to `/5-new-component` or `/6-new-page`)
+- If critical fixes needed, suggest fixing and re-running `/10-review`
+- If the conversation is long, suggest starting fresh for the re-review
+- Caveman mode stays active across sessions — no need to re-enable
 
 ## Next step
 
-Se aprovado:
-> "Design validado. Próximo passo: handoff para desenvolvimento ou atualizar a task com o link dos frames."
+**If approved:**
+"Design validated. Next step: handoff to development or update the task with the frame links."
 
-Se há ajustes críticos:
-> "Corrija os pontos 🔴 listados e rode `10-review` novamente."
+**If critical adjustments needed:**
+"Fix the 🔴 items listed and run `/10-review` again — preferably in a fresh conversation."
 
 ---
 
-## Regras
+## Rules
 
-- Tom construtivo, acionável e educativo — nunca crítica sem direção de solução
-- Sempre ancorar críticas em exemplos concretos do design observado
-- Priorizar impacto no usuário final, não preferências estéticas
-- Referenciar o design system do projeto quando relevante
-- Se o frame não carregar ou o acesso ao Figma falhar, pedir o link correto
-- Se o contexto da task estiver ausente, inferir pelo design e sinalizar
+- Constructive, actionable, educational tone — never critique without a solution direction
+- Always anchor critiques in concrete examples from the observed design
+- Prioritize end-user impact, not aesthetic preferences
+- Reference the project's design system when relevant
+- If the frame doesn't load or Figma access fails, ask for the correct link
+- If task context is missing, infer from the design and flag it

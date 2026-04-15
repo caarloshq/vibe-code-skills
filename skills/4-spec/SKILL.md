@@ -1,11 +1,11 @@
 ---
 name: 4-spec
-description: Generate a structured product specification document (spec.md) that describes everything the application needs to do before any code is written. Use this skill whenever the user mentions "spec", "specification", "product spec", wants to document what an app should do, needs to define pages/screens/components/behaviors, or is planning a new feature or full application. Also use when the user says "describe the app", "what should it do", "define the product", or any variation of mapping out functionality before implementation. Run this after --3-plan has generated the PRD, to detail the full product specification.
+description: Generate a structured product specification document (spec.md) that describes everything the application needs to do before any code is written. Use this skill whenever the user mentions "spec", "specification", "product spec", wants to document what an app should do, needs to define pages/screens/components/behaviors, or is planning a new feature or full application. Also use when the user says "describe the app", "what should it do", "define the product", or any variation of mapping out functionality before implementation. Run this after /3-plan has generated the PRD, to detail the full product specification.
 ---
 
 # Product Specification Generator
 
-This skill creates a structured specification document that maps out everything the application (or feature) needs to do. The spec is the single source of truth for what gets built: it feeds directly into the implementation tasks from `--3-plan`.
+This skill creates a structured specification document that maps out everything the application (or feature) needs to do. The spec is the single source of truth for what gets built: it feeds directly into the implementation tasks from `/3-plan`.
 
 ## Skill workflow position
 
@@ -18,9 +18,14 @@ This skill creates a structured specification document that maps out everything 
   5-new-component   Add/install components
   6-new-page        Build pages from designs
   7-doc-sync        Keep documentation in sync
+  8-plan-design     Understand scope, generate visual map
+  9-figma           Execute in Figma based on the plan
+  10-review         QA: compare Figma with plan and spec
 ```
 
-**Prerequisites:** Ideally --1-new-project, --2-design-base, and --3-plan have run, so the project has architecture, design tokens, and a PRD. If --3-plan hasn't run, the spec can still be created standalone.
+**Prerequisites:** Ideally `/1-new-project` and `/2-design-base` have run, so the project has architecture and design tokens.
+
+**Note on ordering:** `/3-plan` and `/4-spec` are interchangeable in order — use whichever fits what the user has in hand. If the user already knows what to build, `/3-plan` comes first. If the user needs to define what the app does first, `/4-spec` comes first. Both work standalone.
 
 ## Why specs matter
 
@@ -172,14 +177,21 @@ Maintain this file whenever a spec is created or updated:
 
 ---
 
+## Context management
+
+This skill loads ~190 lines into context. After completing:
+- Suggest the next skill but do NOT auto-run it
+- If the conversation already has 2+ skills loaded, suggest starting a fresh conversation
+- Caveman mode stays active across sessions — no need to re-enable
+
 ## Next step
 
 After generating the spec, ask the user:
 
 **"Spec is ready. Do you want to start implementing? I can begin executing the tasks from your PRD (`docs/plans/prd-<name>.md`)."**
 
-If yes, suggest: "Let's start with Task 1. If it's a UI task, I'll use `--5-new-component` or `--6-new-page`. If it's data/logic, I'll implement directly."
+If yes, suggest: "Let's start with Task 1. If it's a UI task, I'll use `/5-new-component` or `/6-new-page`. If it's data/logic, I'll implement directly."
 
-If no PRD exists, suggest: "No PRD found. Run `--3-plan` to break this spec into implementable tasks with exact files to create and modify."
+If no PRD exists, suggest: "No PRD found. Run `/3-plan` to break this spec into implementable tasks with exact files to create and modify."
 
 If the spec is large (many pages/features), suggest: "This spec has [N] pages. You might want to implement one feature at a time rather than all at once."

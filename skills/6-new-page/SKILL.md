@@ -1,6 +1,6 @@
 ---
 name: 6-new-page
-description: Build a page from a screenshot, Figma, or design reference using the project's existing components and design tokens. Use this skill whenever the user mentions "new page", "create page", "build page", "build screen", wants to turn a design into code, has a screenshot or Figma to implement, or needs to add a new route/view to the application. Also triggers on "implement this design", "code this screen", "turn this into a page", or any request to create a new page from a visual reference. This skill assumes --2-design-base has run and components exist. It assembles pages from what's already in the project.
+description: Build a page from a screenshot, Figma, or design reference using the project's existing components and design tokens. Use this skill whenever the user mentions "new page", "create page", "build page", "build screen", wants to turn a design into code, has a screenshot or Figma to implement, or needs to add a new route/view to the application. Also triggers on "implement this design", "code this screen", "turn this into a page", or any request to create a new page from a visual reference. This skill assumes /2-design-base has run and components exist. It assembles pages from what's already in the project.
 ---
 
 # New Page
@@ -18,9 +18,12 @@ This skill takes a visual reference (screenshot, Figma, mockup) and builds a pag
 → YOU ARE HERE
   6-new-page        Build pages from designs
   7-doc-sync        Keep documentation in sync
+  8-plan-design     Understand scope, generate visual map
+  9-figma           Execute in Figma based on the plan
+  10-review         QA: compare Figma with plan and spec
 ```
 
-**Prerequisites:** `--2-design-base` must have run so `app/globals.css` has tokens and shadcn is initialized. Components from `--5-new-component` should exist for assembly.
+**Prerequisites:** `/2-design-base` must have run so `app/globals.css` has tokens and shadcn is initialized. Components from `/5-new-component` should exist for assembly.
 
 ## What to ask the user
 
@@ -33,7 +36,7 @@ The user describes the page (dashboard, settings, landing, profile, etc.) and sh
 1. **Read `app/globals.css`: primary source of truth for all design tokens**
 2. **Read `CLAUDE.md`: project rules, architecture patterns, naming conventions**
 3. **Read `architecture.md`** if it exists: folder structure, separation of concerns
-4. **Check `docs/specs/`: if a spec exists for this page/feature, follow it**. The spec from `--4-spec` defines what the page does; the visual reference defines how it looks
+4. **Check `docs/specs/`: if a spec exists for this page/feature, follow it**. The spec from `/4-spec` defines what the page does; the visual reference defines how it looks
 5. **List existing components: scan `components/ui/` and `components/`** to know what's already available. Reuse first, install second, create last
 
 ## Workflow
@@ -64,7 +67,7 @@ For each UI element identified, first check what already exists in the project:
 1. **Already in `components/`?** Import and use directly
 2. **Available in `components/ui/` (shadcn)?** Use directly
 3. **Available in shadcn registry but not installed?** Install via MCP
-4. **Doesn't exist anywhere?** Note it, but don't build it inline. Suggest running `--5-new-component` for it after the page is done
+4. **Doesn't exist anywhere?** Note it, but don't build it inline. Suggest running `/5-new-component` for it after the page is done
 
 Use shadcn MCP to verify components exist and get install commands:
 - `search_items_in_registries` for each component type
@@ -77,7 +80,7 @@ Use shadcn MCP to verify components exist and get install commands:
 | Navigation sidebar | `components/ui/sidebar` | Use as-is |
 | Stats cards | `components/StatsCard` | Use as-is |
 | Data table | Not installed | `npx shadcn@latest add table` |
-| Custom chart | None | Flag for `--5-new-component`. |
+| Custom chart | None | Flag for `/5-new-component`. |
 
 ### 3. Install missing shadcn components
 
@@ -89,7 +92,7 @@ npx shadcn@latest add [component1] [component2] [component3] ...
 
 ### 4. Build the page: prototype first
 
-Create `app/[page-name]/page.tsx` as a **visual prototype**: layout and structure with mock data. No API calls, no server actions, no real data fetching. This is intentional: get the visual right first, wire up functionality later (that's the `--3-plan` workflow).
+Create `app/[page-name]/page.tsx` as a **visual prototype**: layout and structure with mock data. No API calls, no server actions, no real data fetching. This is intentional: get the visual right first, wire up functionality later (that's the `/3-plan` workflow).
 
 ```tsx
 import { Card, CardHeader, CardContent } from "@/components/ui/card"
@@ -173,24 +176,31 @@ components/
 - Page created at `app/[page-name]/page.tsx` as visual prototype
 - Responsive layout matching the design
 - All styling via `globals.css` tokens
-- Flagged components that need `--5-new-component` (if any)
+- Flagged components that need `/5-new-component` (if any)
+
+## Context management
+
+This skill loads ~200 lines into context. After completing:
+- Suggest the next step (flagged components, next PRD task, or `/7-doc-sync`) but do NOT auto-run
+- If the conversation already has 2+ skills loaded, suggest starting a fresh conversation
+- Caveman mode stays active across sessions — no need to re-enable
 
 ## Next step
 
 After building the page, tell the user based on context:
 
-**If components were flagged:** "Page is built. I flagged [N] elements that need custom components. Run `--5-new-component` for each: [list them]."
+**If components were flagged:** "Page is built. I flagged [N] elements that need custom components. Run `/5-new-component` for each: [list them]."
 
 **If working through a PRD:** "Page prototype is ready. Check your PRD (`docs/plans/prd-<name>.md`) for the next task. The functional wiring comes next."
 
-**If building standalone:** "Page prototype is done with mock data. When you're ready to add real functionality, run `--3-plan` to plan the implementation."
+**If building standalone:** "Page prototype is done with mock data. When you're ready to add real functionality, run `/3-plan` to plan the implementation."
 
-**After several pages are built:** "Several pages were added. Consider running `--7-doc-sync` to keep documentation up to date."
+**After several pages are built:** "Several pages were added. Consider running `/7-doc-sync` to keep documentation up to date."
 
 ## Notes
 
-- **Prototype first**: visual layout with mock data only. Functionality comes later via `--3-plan` and execution.
-- **Reuse over creation**: always check existing components before creating inline elements. If something needs to be a reusable component, flag it for `--5-new-component` rather than building it inside the page.
+- **Prototype first**: visual layout with mock data only. Functionality comes later via `/3-plan` and execution.
+- **Reuse over creation**: always check existing components before creating inline elements. If something needs to be a reusable component, flag it for `/5-new-component` rather than building it inside the page.
 - **`globals.css` is the primary source of truth**: read it first, reference its tokens exclusively.
 - **Follow the spec**: if `docs/specs/` has a spec for this page, the spec defines what exists and what it does.
 - **Use shadcn MCP** to verify and install components.

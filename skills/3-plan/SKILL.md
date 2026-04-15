@@ -1,6 +1,6 @@
 ---
 name: 3-plan
-description: Generate a detailed Product Requirements Document (prd.md) that breaks a feature or task into an actionable implementation plan with exact files to create/modify. Use this skill whenever the user mentions "plan", "prd", "planning", "break down", "implementation plan", wants to plan before coding, needs to research the codebase before a task, or wants to know exactly which files to touch for a feature. Also triggers on "how should I implement", "what files do I need", or any request to turn a spec or idea into step-by-step development tasks. Run this after --2-design-base has set up the visual foundation.
+description: Generate a detailed Product Requirements Document (prd.md) that breaks a feature or task into an actionable implementation plan with exact files to create/modify. Use this skill whenever the user mentions "plan", "prd", "planning", "break down", "implementation plan", wants to plan before coding, needs to research the codebase before a task, or wants to know exactly which files to touch for a feature. Also triggers on "how should I implement", "what files do I need", or any request to turn a spec or idea into step-by-step development tasks. Run this after /2-design-base has set up the visual foundation.
 ---
 
 # Implementation Planner (PRD Generator)
@@ -18,9 +18,14 @@ This skill takes a feature description or spec and produces a detailed implement
   5-new-component   Add/install components
   6-new-page        Build pages from designs
   7-doc-sync        Keep documentation in sync
+  8-plan-design     Understand scope, generate visual map
+  9-figma           Execute in Figma based on the plan
+  10-review         QA: compare Figma with plan and spec
 ```
 
-**Prerequisites:** Ideally a spec exists in `docs/specs/`. If not, the plan can be based on the user's description: but suggest running `--4-spec` first for complex features.
+**Prerequisites:** Ideally a spec exists in `docs/specs/`. If not, the plan can be based on the user's description.
+
+**Note on ordering:** `/3-plan` and `/4-spec` are interchangeable in order — use whichever fits what the user has in hand. If the user already knows what to build, start with `/3-plan`. If the user needs to define what the app does first, start with `/4-spec`. The pipeline shows 3→4 but both work as entry points.
 
 ## Why planning before coding matters
 
@@ -35,10 +40,10 @@ The most powerful part: when the PRD lists the exact files to create or modify, 
 Ask the user:
 
 1. **What feature or task are you planning?** (brief description)
-2. **Is there a spec for this?** Check `docs/specs/` for a relevant spec file, if one exists from a previous --4-spec run. If one exists, read it: it's the primary input for the plan.
+2. **Is there a spec for this?** Check `docs/specs/` for a relevant spec file, if one exists from a previous /4-spec run. If one exists, read it: it's the primary input for the plan.
 3. **Any constraints or preferences?** (specific library, approach, deadline)
 
-If a spec exists (e.g., `docs/specs/spec-auth.md`), the plan should implement exactly what the spec describes. If no spec exists, the plan is based on the user's description: but suggest they run `--4-spec` first for complex features.
+If a spec exists (e.g., `docs/specs/spec-auth.md`), the plan should implement exactly what the spec describes. If no spec exists, the plan is based on the user's description: but suggest they run `/4-spec` first for complex features.
 
 ### Step 2: Research the codebase
 
@@ -132,7 +137,7 @@ Break the feature into small, ordered tasks. Each task should be completable in 
 ### Task order strategy
 1. **Data layer first**: models, types, DB migrations
 2. **Server logic second**: actions, API routes, integrations
-3. **UI prototypes third**: pages and components (visual only, no functionality) → use `--6-new-page` and `--5-new-component`
+3. **UI prototypes third**: pages and components (visual only, no functionality) → use `/6-new-page` and `/5-new-component`
 4. **Wire it up last**: hooks that connect UI to server logic
 
 This order means each layer can be tested independently, and later layers build on stable foundations.
@@ -209,9 +214,16 @@ A good rule: if a task would require the AI to hold more than 10-15 files in con
 Don't assume a file needs to be created if one already exists that could be extended. Don't prescribe a library if the project already uses a different one for the same purpose. The research step exists precisely to avoid these mistakes.
 
 ### Prototype tasks before functional tasks
-Following the workflow pattern: first create all pages/components as visual prototypes (static UI, mock data) via `--6-new-page`, then create functional tasks that wire them to real data and server logic. This separation makes bugs easier to isolate.
+Following the workflow pattern: first create all pages/components as visual prototypes (static UI, mock data) via `/6-new-page`, then create functional tasks that wire them to real data and server logic. This separation makes bugs easier to isolate.
 
 ---
+
+## Context management
+
+This skill loads ~230 lines into context. After completing:
+- Suggest the next skill but do NOT auto-run it
+- If the conversation already has 2+ skills loaded, suggest starting a fresh conversation
+- Caveman mode stays active across sessions — no need to re-enable
 
 ## Next step
 
@@ -219,10 +231,10 @@ After generating the PRD, ask the user:
 
 **"PRD is ready at `docs/plans/prd-<name>.md`. Do you want to clear the context and start fresh before moving on?"**
 
-If yes, suggest: "Start a new conversation and run `--4-spec` to detail the product specification, or jump straight to Task 1 if you already know what to build."
+If yes, suggest: "Start a new conversation and run `/4-spec` to detail the product specification, or jump straight to Task 1 if you already know what to build."
 
-If no, suggest: "Next step: run `--4-spec` to define the product specification in detail, or start executing Task 1 if the scope is already clear."
+If no, suggest: "Next step: run `/4-spec` to define the product specification in detail, or start executing Task 1 if the scope is already clear."
 
 If the PRD has many tasks, add: "You have [N] tasks. I recommend tackling them one at a time in order."
 
-After a batch of tasks is complete, suggest: **"Several files changed. Consider running `--7-doc-sync` to keep your documentation up to date."**
+After a batch of tasks is complete, suggest: **"Several files changed. Consider running `/7-doc-sync` to keep your documentation up to date."**

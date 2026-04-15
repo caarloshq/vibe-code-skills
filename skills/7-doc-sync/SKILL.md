@@ -1,6 +1,6 @@
 ---
 name: 7-doc-sync
-description: Review project documentation (architecture.md, CLAUDE.md, readme.md) against the current codebase, report what's outdated, and apply updates only after user confirmation. Use this skill whenever the user mentions "doc-sync", "sync docs", "update docs", "documentation is outdated", "refresh architecture", "update readme", or after significant project changes like adding new features, changing stack, refactoring folder structure, or modifying patterns. Also use when the user says "my docs are stale", "update project docs", or any variation of keeping documentation in sync with reality. This skill should be run periodically, especially after completing a batch of implementation tasks from --3-plan, --5-new-component, or --6-new-page. This skill does NOT touch CSS, design tokens, or code files. It only reads and updates documentation.
+description: Review project documentation (architecture.md, CLAUDE.md, readme.md) against the current codebase, report what's outdated, and apply updates only after user confirmation. Use this skill whenever the user mentions "doc-sync", "sync docs", "update docs", "documentation is outdated", "refresh architecture", "update readme", or after significant project changes like adding new features, changing stack, refactoring folder structure, or modifying patterns. Also use when the user says "my docs are stale", "update project docs", or any variation of keeping documentation in sync with reality. This skill should be run periodically, especially after completing a batch of implementation tasks from /3-plan, /5-new-component, or /6-new-page. This skill does NOT touch CSS, design tokens, or code files. It only reads and updates documentation.
 ---
 
 # Documentation Sync
@@ -18,9 +18,12 @@ This skill reads the project's documentation, compares it against the current st
   6-new-page        Build pages from designs
 → YOU ARE HERE
   7-doc-sync        Keep documentation in sync
+  8-plan-design     Understand scope, generate visual map
+  9-figma           Execute in Figma based on the plan
+  10-review         QA: compare Figma with plan and spec
 ```
 
-**When to run:** After completing a batch of implementation tasks. Other skills (`--3-plan`, `--5-new-component`, `--6-new-page`) will suggest running `--7-doc-sync` when they detect that significant changes have been made.
+**When to run:** After completing a batch of implementation tasks. Other skills (`/3-plan`, `/5-new-component`, `/6-new-page`) will suggest running `/7-doc-sync` when they detect that significant changes have been made.
 
 ## Why doc-sync matters
 
@@ -35,7 +38,7 @@ Projects evolve fast, especially with AI-assisted development. After a few imple
 
 **Reads but does NOT modify:**
 - `app/globals.css`: reads to understand current tokens, but never modifies
-- `design.md`: reads for context, but design.md updates happen via `--2-design-base`
+- `design.md`: reads for context, but design.md updates happen via `/2-design-base`
 - Source code files: reads to understand the project state, never modifies
 
 ## How it works
@@ -134,7 +137,7 @@ When the user confirms, apply changes following these rules:
 4. **Maintain consistency across docs**: If the folder structure changes in `architecture.md`, the same change must be reflected in `CLAUDE.md`. Keep documents internally consistent.
 
 5. **Missing files**: If a doc doesn't exist and the user wants it created:
-   - `architecture.md` / `CLAUDE.md` → generate from scratch based on the codebase (follow templates from `--1-new-project`)
+   - `architecture.md` / `CLAUDE.md` → generate from scratch based on the codebase (follow templates from `/1-new-project`)
    - `README.md` → generate using the template below
 
 ---
@@ -192,15 +195,21 @@ VARIABLE_NAME=description
 
 ## When to suggest running doc-sync
 
-If you notice during any other task that documentation is outdated (e.g., while reading `architecture.md` during a `--3-plan` and seeing it doesn't match the code), mention it: "I noticed `architecture.md` is out of date: you might want to run `--7-doc-sync` after this task."
+If you notice during any other task that documentation is outdated (e.g., while reading `architecture.md` during a `/3-plan` and seeing it doesn't match the code), mention it: "I noticed `architecture.md` is out of date: you might want to run `/7-doc-sync` after this task."
 
 ---
+
+## Context management
+
+This skill loads ~210 lines into context. After completing:
+- Suggest continuing with the current task or next PRD task, but do NOT auto-run
+- Caveman mode stays active across sessions — no need to re-enable
 
 ## Next step
 
 After syncing, tell the user based on context:
 
-**If the project is actively being built:** "Docs are synced. Continue with your current task: next PRD task, or `--5-new-component` / `--6-new-page` if you're building UI."
+**If the project is actively being built:** "Docs are synced. Continue with your current task: next PRD task, or `/5-new-component` / `/6-new-page` if you're building UI."
 
 **If this was a periodic sync:** "Documentation is up to date. Everything looks consistent across architecture.md, CLAUDE.md, and README.md."
 

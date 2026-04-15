@@ -1,6 +1,6 @@
 ---
 name: 5-new-component
-description: Add, install, or customize a component using shadcn/ui and the project's design system. Use this skill whenever the user mentions "new component", "add component", "create component", "install component", wants to add a UI element (button, card, form, modal, table, etc.), or needs to customize a shadcn component with project-specific variants. Also triggers on "component showcase", "add to styleguide", or any request to extend the project's component library. This skill assumes --2-design-base has already run. If globals.css has no tokens, tell the user to run --2-design-base first.
+description: Add, install, or customize a component using shadcn/ui and the project's design system. Use this skill whenever the user mentions "new component", "add component", "create component", "install component", wants to add a UI element (button, card, form, modal, table, etc.), or needs to customize a shadcn component with project-specific variants. Also triggers on "component showcase", "add to styleguide", or any request to extend the project's component library. This skill assumes /2-design-base has already run. If globals.css has no tokens, tell the user to run /2-design-base first.
 ---
 
 # New Component
@@ -18,9 +18,12 @@ This skill adds components to the project. Either install from shadcn/ui or buil
   5-new-component   Add/install components
   6-new-page        Build pages from designs
   7-doc-sync        Keep documentation in sync
+  8-plan-design     Understand scope, generate visual map
+  9-figma           Execute in Figma based on the plan
+  10-review         QA: compare Figma with plan and spec
 ```
 
-**Prerequisites:** `--2-design-base` must have run so `app/globals.css` has tokens and shadcn is initialized. If not, tell the user to run it first.
+**Prerequisites:** `/2-design-base` must have run so `app/globals.css` has tokens and shadcn is initialized. If not, tell the user to run it first.
 
 ## What to ask the user
 
@@ -213,15 +216,22 @@ app/
 - `styleguide/page.tsx` synced if new tokens were introduced
 - Component visible and navigable in the styleguide
 
+## Context management
+
+This skill loads ~230 lines into context. After completing:
+- Suggest `/6-new-page` or the next PRD task, but do NOT auto-run
+- If the conversation already has 2+ skills loaded, suggest starting a fresh conversation
+- Caveman mode stays active across sessions — no need to re-enable
+
 ## Next step
 
 After creating the component, tell the user:
 
-**"Component is ready and visible in the styleguide. Need to use it in a page? Run `--6-new-page` with your design reference."**
+**"Component is ready and visible in the styleguide. Need to use it in a page? Run `/6-new-page` with your design reference."**
 
-If the user is working through a PRD from `--3-plan`, remind them: "Check your PRD for the next task in the list."
+If the user is working through a PRD from `/3-plan`, remind them: "Check your PRD for the next task in the list."
 
-If many components have been added in a batch, suggest: **"Several components were added: consider running `--7-doc-sync` to keep docs up to date."**
+If many components have been added in a batch, suggest: **"Several components were added: consider running `/7-doc-sync` to keep docs up to date."**
 
 ## Notes
 
